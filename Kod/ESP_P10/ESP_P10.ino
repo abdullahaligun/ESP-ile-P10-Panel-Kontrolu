@@ -1,10 +1,4 @@
-/*
- * YAPILACAK İŞLEMLER:
-1 BAŞLANGIC EKRANINDA AD TECH YAZISI YAZACAK MİNİK FONT İLE 
-2 AD TECH YAZISINDAN SONRA EKRANI SİLİP FİYAT BEKLEYECEK
-3 HER DATA GÖNDERİMİNDEN SONRA EKRANI SİLİP YENİ DATAYI ÖYLE YAZACAK 
-4 FONT BÜYÜTÜLECEK
-*/
+
 #include <ESP8266WebServer.h>
 #include <EEPROM.h>
 #include <DMDESP.h>
@@ -27,11 +21,11 @@ int sayac = 100;
 #define DISPLAYS_HIGH 1 //--> Panel Rows
 DMDESP Disp(DISPLAYS_WIDE, DISPLAYS_HIGH);  //--> Number of Panels P10 used (Column, Row)
 //----------------------------------------
-String AD_TECH = "ADTECH";
-String fiyat_1_txt = ""; //--> Variable to hold the text that is sent from a web server (web page)
-String fiyat_2_txt = "";
-String fiyat_3_txt = "";
-String fiyat_4_txt = "";
+
+String price_1_txt = ""; //--> Variable to hold the text that is sent from a web server (web page)
+String price_2_txt = "";
+String price_3_txt = "";
+String price_4_txt = "";
 //========================================================================This routine is executed when you open NodeMCU ESP8266 IP Address in browser
 void handleRoot() {
   server.send(200, "text/html", MAIN_page); //--> Send web page
@@ -39,55 +33,55 @@ void handleRoot() {
 //========================================================================
 
 //========================================================================Subroutines to handle incoming Text Data
-void fiyat_1() {
-  String temp = server.arg("Fiyat1");
+void price_1() {
+  String temp = server.arg("price1");
   if(temp.length() <= 4){
     txt = true;
     sayac = 100;
-  fiyat_1_txt = temp;
-  Serial.println("fiyat 1 : ");
-  Serial.println(fiyat_1_txt);
+  price_1_txt = temp;
+  Serial.println("price 1 : ");
+  Serial.println(price_1_txt);
   server.send(200, "text/plane", ""); //--> Send web page
-  EEPROM.put(1, fiyat_1_txt);
+  EEPROM.put(1, price_1_txt);
   Disp.clear();
   }
 }
-void fiyat_2() {
-  String temp = server.arg("Fiyat2");
+void price_2() {
+  String temp = server.arg("price2");
   if(temp.length() <= 4){
     txt = true;
     sayac = 100;
-  fiyat_2_txt = temp;
-  Serial.println("fiyat 2 : ");
-  Serial.println(fiyat_2_txt);
+  price_2_txt = temp;
+  Serial.println("price 2 : ");
+  Serial.println(price_2_txt);
   server.send(200, "text/plane", ""); //--> Send web page
-  EEPROM.put(2, fiyat_2_txt);
+  EEPROM.put(2, price_2_txt);
   Disp.clear();
   }
 }
-void fiyat_3() {
-String temp = server.arg("Fiyat3");
+void price_3() {
+String temp = server.arg("price3");
   if(temp.length() <= 4){
     txt = true;
     sayac = 100;
-  fiyat_3_txt = temp;
-  Serial.println("fiyat 3 : ");
-  Serial.println(fiyat_3_txt);
+  price_3_txt = temp;
+  Serial.println("price 3 : ");
+  Serial.println(price_3_txt);
   server.send(200, "text/plane", ""); //--> Send web page
-  EEPROM.put(3, fiyat_3_txt);
+  EEPROM.put(3, price_3_txt);
   Disp.clear();
   }
 }
-void fiyat_4() {
-  String temp = server.arg("Fiyat4");
+void price_4() {
+  String temp = server.arg("price4");
   if(temp.length() <= 4){
     txt = true;
     sayac = 100;
-  fiyat_4_txt = temp;
-  Serial.println("fiyat 4 : ");
-  Serial.println(fiyat_4_txt);
+  price_4_txt = temp;
+  Serial.println("price 4 : ");
+  Serial.println(price_4_txt);
   server.send(200, "text/plane", ""); //--> Send web page
-  EEPROM.put(4, fiyat_4_txt);
+  EEPROM.put(4, price_4_txt);
   Disp.clear();
   }
 }
@@ -99,8 +93,6 @@ void setup(){
   delay(500);
   EEPROM.begin(512);
   delay(500);
-  EEPROM.put(0, AD_TECH);
-  Serial.println(EEPROM.get(0,AD_TECH));
   //----------------------------------------DMDESP Setup
   Disp.start(); //--> Run the DMDESP library
   Disp.setBrightness(100); //--> Brightness level
@@ -120,24 +112,24 @@ void setup(){
   delay(100);
   server.on("/", handleRoot); //--> Routine to handle at root location. This is to display web page.
   delay(100);
-  server.on("/setTexq", fiyat_1);  //--> Routine to handle handle_Ifiyat_1_txtSubroutines
+  server.on("/setTexq", price_1);  //--> Routine to handle handle_Iprice_1_txtSubroutines
   delay(100);
-  server.on("/setText", fiyat_2);
+  server.on("/setText", price_2);
   delay(100);
-  server.on("/setTexe", fiyat_3);
+  server.on("/setTexe", price_3);
   delay(100);
-  server.on("/setTexr", fiyat_4);
+  server.on("/setTexr", price_4);
   delay(100);
   server.begin(); //--> Start server
   delay(100);
   Serial.println("HTTP server started");
-  //EEPROM.get(1,fiyat_2_txt);
+  //EEPROM.get(1,price_2_txt);
   delay(100);
-  //EEPROM.get(2,fiyat_2_txt);
+  //EEPROM.get(2,price_2_txt);
   delay(100);
-  //EEPROM.get(3,fiyat_3_txt);
+  //EEPROM.get(3,price_3_txt);
   delay(100);
-  //EEPROM.get(4,fiyat_4_txt);
+  //EEPROM.get(4,price_4_txt);
   delay(100);
 }
 
@@ -145,14 +137,14 @@ void loop(){
   server.handleClient();
   
   Disp.loop();
-  Disp.drawText(1, 0, fiyat_1_txt);
-  Disp.drawText(33, 0, fiyat_2_txt); //--> Display text "Disp.drawText(x position, y position, text)"
-  Disp.drawText(65, 0, fiyat_3_txt);
-  Disp.drawText(97, 0, fiyat_4_txt);
+  Disp.drawText(1, 0, price_1_txt);
+  Disp.drawText(33, 0, price_2_txt); //--> Display text "Disp.drawText(x position, y position, text)"
+  Disp.drawText(65, 0, price_3_txt);
+  Disp.drawText(97, 0, price_4_txt);
   
-  /*Disp.drawText(130, 0, fiyat_3_txt);
-  Disp.drawText(162, 0, fiyat_3_txt);
-  Disp.drawText(194, 0, fiyat_4_txt);
-  Disp.drawText(226, 0, fiyat_4_txt);*/
+  /*Disp.drawText(130, 0, price_3_txt);
+  Disp.drawText(162, 0, price_3_txt);
+  Disp.drawText(194, 0, price_4_txt);
+  Disp.drawText(226, 0, price_4_txt);*/
 }
 //=================================================================================================
