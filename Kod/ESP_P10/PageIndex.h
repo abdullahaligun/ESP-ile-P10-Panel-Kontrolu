@@ -51,25 +51,25 @@ const char MAIN_page[] PROGMEM = R"=====(<!doctype html>
   <h1>LEDPiKSEL.COM P10 Panel Kontrol Ekranı</h1>
   <h2><p id="Fiyat_1_H">Fiyat_1 :</p></h2>
   <textarea id="Fiyat1_text" name="Fiyat_1_text" rows="1" cols="5"></textarea><br>
-  <button type="1" class="buttonSend" onclick="sendData('Fiyat1','q')">Fiyat 1 Güncelle</button>
+  <button type="1" class="buttonSend" onclick="sendData('Fiyat1','Price1')">Fiyat 1 Güncelle</button>
 </div>
 
 <div>
   <h2><p id="Fiyat_2_H">Fiyat_2 :</p></h2>
   <textarea id="Fiyat2_text" name="Fiyat_2_text" rows="1" cols="5"></textarea><br>
-  <button type="2" class="buttonSend" onclick="sendData('Fiyat2','t')">Fiyat_2 Güncelle</button>
+  <button type="2" class="buttonSend" onclick="sendData('Fiyat2','Price2')">Fiyat_2 Güncelle</button>
 </div>
 
 <div>
   <h2><p id="Fiyat_3_H">Fiyat_3 :</p></h2>
   <textarea id="Fiyat3_text" name="Fiyat_3_text" rows="1" cols="5"></textarea><br>
-  <button type="3" class="buttonSend" onclick="sendData('Fiyat3','e')">Fiyat_3 Güncelle</button>
+  <button type="3" class="buttonSend" onclick="sendData('Fiyat3','Price3')">Fiyat_3 Güncelle</button>
 </div>
 
 <div>
   <h2><p id="Fiyat_4_H">Fiyat_4 :</p></h2>
   <textarea id="Fiyat4_text" name="Fiyat_4_text" rows="1" cols="5"></textarea><br>
-  <button type="3" class="buttonSend" onclick="sendData('Fiyat4','r')">Fiyat_4 Güncelle</button>
+  <button type="3" class="buttonSend" onclick="sendData('Fiyat4','Price4')">Fiyat_4 Güncelle</button>
 </div>
 
 
@@ -77,7 +77,7 @@ const char MAIN_page[] PROGMEM = R"=====(<!doctype html>
   function sendData(i, q) {
     var Text = document.getElementById(i+"_text").value;
     var xhttp = new XMLHttpRequest();
-    xhttp.open("GET", "setTex"+q+"?"+i+"="+Text, true);
+    xhttp.open("GET", "set"+q+"?"+i+"="+Text, true);
     xhttp.send();
     window.alert(i+" fiyatı güncellendi : " + document.getElementById(i+"_text").value);
   }
